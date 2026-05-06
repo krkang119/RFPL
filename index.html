@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>반응성 및 추진 연구실 | 경희대학교</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --deep: #091629;
+    --blue: #1A4B8C;
+    --accent: #2E9CCA;
+    --bright: #5BC8F0;
+    --gold: #F0A500;
+    --light: #E8EFF7;
+    --white: #FFFFFF;
+    --gray: #8A9BB0;
+    --card-bg: rgba(255,255,255,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', 'Noto Sans KR', sans-serif;
+    background: var(--deep);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6vw;
+    height: 64px;
+    background: rgba(9,22,41,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(46,156,202,0.15);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+    color: var(--bright);
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gray); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--bright); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 8vw 8vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(26,75,140,0.45) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 20% 80%, rgba(46,156,202,0.2) 0%, transparent 60%),
+      linear-gradient(160deg, #0B1F3A 0%, #091629 100%);
+  }
+  /* animated grid */
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(46,156,202,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,156,202,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 20s linear infinite;
+  }
+  @keyframes gridDrift {
+    from { transform: translateY(0); }
+    to   { transform: translateY(60px); }
+  }
+  /* glowing orb */
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: 0.35; pointer-events: none;
+  }
+  .orb-1 { width: 500px; height: 500px; background: #1A4B8C; top: -100px; right: 5vw; }
+  .orb-2 { width: 300px; height: 300px; background: #2E9CCA; bottom: 10vh; left: 30vw; }
+
+  .hero-tag {
+    position: relative;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .hero-title {
+    position: relative;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 4px;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+  .hero-title .accent { color: var(--bright); }
+  .hero-sub {
+    position: relative;
+    font-family: 'Barlow', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 300; letter-spacing: 2px;
+    color: var(--gray);
+    margin-bottom: 2.5rem;
+  }
+  .hero-pills {
+    position: relative;
+    display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 3rem;
+  }
+  .pill {
+    padding: 0.35rem 1rem;
+    border: 1px solid rgba(46,156,202,0.4);
+    border-radius: 100px;
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 1px;
+    color: var(--bright); background: rgba(46,156,202,0.08);
+  }
+  .hero-scroll {
+    position: relative;
+    display: flex; align-items: center; gap: 0.8rem;
+    font-size: 0.72rem; letter-spacing: 2px; color: var(--gray);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 40px; height: 1px; background: var(--gray);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity: 0.3; transform: scaleX(1); }
+    50%      { opacity: 1;   transform: scaleX(1.3); transform-origin: left; }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 8vw; }
+  .section-tag {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    letter-spacing: 3px; color: var(--white);
+    margin-bottom: 3rem;
+  }
+  .divider {
+    width: 48px; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--bright));
+    margin-bottom: 3rem;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--navy); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: center;
+  }
+  .about-text p {
+    font-size: 1.05rem; line-height: 1.9; color: #B8CBDF;
+    font-weight: 300; margin-bottom: 1.2rem;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(46,156,202,0.15);
+    border-radius: 12px; padding: 1.8rem;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .stat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; letter-spacing: 2px; color: var(--bright);
+  }
+  .stat-label { font-size: 0.78rem; color: var(--gray); letter-spacing: 1px; margin-top: 0.3rem; }
+
+  /* ── RESEARCH ── */
+  #research { background: var(--deep); }
+  .research-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;
+  }
+  .research-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(46,156,202,0.12);
+    border-radius: 14px; padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: all 0.3s;
+  }
+  .research-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--bright));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .research-card:hover { border-color: rgba(46,156,202,0.4); transform: translateY(-6px); }
+  .research-card:hover::before { transform: scaleX(1); }
+  .research-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(46,156,202,0.12);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.2rem; font-size: 1.3rem;
+  }
+  .research-card h3 {
+    font-size: 1rem; font-weight: 600; color: var(--white);
+    margin-bottom: 0.7rem; line-height: 1.4;
+  }
+  .research-card p {
+    font-size: 0.875rem; color: var(--gray); line-height: 1.7; font-weight: 300;
+  }
+
+  /* ── PROFESSOR ── */
+  #professor { background: var(--navy); }
+  .prof-card {
+    display: grid; grid-template-columns: 260px 1fr; gap: 4rem;
+    background: var(--card-bg);
+    border: 1px solid rgba(46,156,202,0.15);
+    border-radius: 20px; padding: 3rem;
+    align-items: start;
+  }
+  .prof-photo {
+    width: 200px; height: 240px;
+    background: linear-gradient(135deg, #1A4B8C, #2E9CCA);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; color: rgba(255,255,255,0.3);
+    overflow: hidden;
+  }
+  .prof-info h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; letter-spacing: 3px; color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+  .prof-title { font-size: 0.9rem; color: var(--accent); letter-spacing: 1px; margin-bottom: 1.5rem; }
+  .prof-detail {
+    display: flex; align-items: center; gap: 0.8rem;
+    font-size: 0.88rem; color: #B8CBDF; margin-bottom: 0.6rem;
+  }
+  .prof-detail span:first-child { color: var(--gray); font-size: 0.78rem; letter-spacing: 1px; min-width: 80px; }
+  .prof-bio {
+    font-size: 0.92rem; color: #B8CBDF; line-height: 1.8;
+    font-weight: 300; margin-top: 1.5rem;
+    border-top: 1px solid rgba(46,156,202,0.1);
+    padding-top: 1.5rem;
+  }
+
+  /* ── MEMBERS ── */
+  #members { background: var(--deep); }
+  .members-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.5rem;
+  }
+  .member-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(46,156,202,0.1);
+    border-radius: 14px; padding: 1.8rem 1.2rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .member-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .member-avatar {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, #1A4B8C, #2E9CCA);
+    margin: 0 auto 1rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; color: rgba(255,255,255,0.4);
+  }
+  .member-name { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+  .member-role { font-size: 0.75rem; color: var(--accent); letter-spacing: 1px; margin-bottom: 0.5rem; }
+  .member-research { font-size: 0.78rem; color: var(--gray); line-height: 1.5; }
+
+  /* ── PUBLICATIONS ── */
+  #publications { background: var(--navy); }
+  .pub-list { display: flex; flex-direction: column; gap: 1rem; }
+  .pub-item {
+    background: var(--card-bg);
+    border: 1px solid rgba(46,156,202,0.1);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 1.4rem 1.8rem;
+    transition: all 0.3s;
+  }
+  .pub-item:hover { border-left-color: var(--bright); background: rgba(46,156,202,0.06); }
+  .pub-year {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 2px;
+    color: var(--accent); margin-bottom: 0.4rem; text-transform: uppercase;
+  }
+  .pub-title { font-size: 0.95rem; color: var(--white); font-weight: 500; margin-bottom: 0.3rem; }
+  .pub-venue { font-size: 0.82rem; color: var(--gray); font-style: italic; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--deep); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .contact-item {
+    display: flex; gap: 1.2rem; margin-bottom: 2rem;
+  }
+  .contact-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(46,156,202,0.1);
+    border: 1px solid rgba(46,156,202,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .contact-label { font-size: 0.72rem; color: var(--gray); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .contact-value { font-size: 0.95rem; color: var(--white); }
+  .contact-value a { color: var(--bright); text-decoration: none; }
+  .contact-value a:hover { text-decoration: underline; }
+
+  .map-placeholder {
+    background: rgba(26,75,140,0.2);
+    border: 1px solid rgba(46,156,202,0.15);
+    border-radius: 14px; padding: 3rem;
+    text-align: center; color: var(--gray);
+  }
+  .map-placeholder .big { font-size: 2.5rem; margin-bottom: 1rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--deep);
+    border-top: 1px solid rgba(46,156,202,0.1);
+    padding: 2rem 8vw;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 3px; color: var(--gray); }
+  .footer-copy { font-size: 0.78rem; color: var(--gray); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    .about-grid, .prof-card, .contact-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .prof-photo { width: 120px; height: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">RFPL · KHU</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#professor">Professor</a></li>
+    <li><a href="#members">Members</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <p class="hero-tag">Kyung Hee University · Dept. of Mechanical Engineering</p>
+  <h1 class="hero-title">REACTING FLOW<br><span class="accent">&amp; PROPULSION</span><br>LAB</h1>
+  <p class="hero-sub">반응성 및 추진 연구실</p>
+  <div class="hero-pills">
+    <span class="pill">극초음속 추진</span>
+    <span class="pill">스크램제트 흡입부</span>
+    <span class="pill">초음속 연소</span>
+    <span class="pill">AI 형상최적화</span>
+    <span class="pill">CFD</span>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll to explore</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-up">
+    <p class="section-tag">About the Lab</p>
+    <h2 class="section-title">연구실 소개</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="about-grid fade-up">
+    <div class="about-text">
+      <p>반응성 및 추진 연구실(Reacting Flow and Propulsion Lab)은 경희대학교 공과대학 기계공학부 소속으로, 차세대 공기흡입식 추진기관 개발을 목표로 연구를 수행하고 있습니다.</p>
+      <p>램-스크램제트 엔진의 흡입부 설계부터 초음속 연소기의 화염 안정화 기술, 그리고 머신러닝을 활용한 형상 최적화까지 — 극초음속 비행체 실현을 위한 핵심 기술을 연구합니다.</p>
+      <p>전산유동해석(CFD)과 실험적 접근을 병행하며, 이론과 실험, 그리고 AI를 통합한 융합 연구를 지향합니다.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Core Research Areas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">CFD</div>
+        <div class="stat-label">Computational Analysis</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">AI</div>
+        <div class="stat-label">Shape Optimization</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">M+D</div>
+        <div class="stat-label">Graduate Programs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="fade-up">
+    <p class="section-tag">Research Areas</p>
+    <h2 class="section-title">연구 분야</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="research-grid fade-up">
+    <div class="research-card">
+      <div class="research-icon">🚀</div>
+      <h3>램-스크램제트 흡입부 · 격리부 설계 및 유동제어</h3>
+      <p>극초음속 비행체용 공기흡입식 추진기관의 흡입구 및 격리부 공력 설계와 유동 제어 기술을 연구합니다. 형상천이 흡입구(Morphing Inlet) 포함.</p>
+    </div>
+    <div class="research-card">
+      <div class="research-icon">🔥</div>
+      <h3>아음속 / 초음속 연소기 및 화염안정기 개발</h3>
+      <p>소형 아음속 연소기의 설계·CFD·실험 및 초음속 화염안정기(Flame Holder) 개발 연구를 수행합니다. OH-PLIF 등 레이저 진단 기법 활용.</p>
+    </div>
+    <div class="research-card">
+      <div class="research-icon">🖥️</div>
+      <h3>전산유동해석 (CFD)</h3>
+      <p>내부 유동장의 압력, 마하수 분포 분석 등 고정밀 수치 시뮬레이션을 통해 추진기관 설계의 신뢰도를 높입니다.</p>
+    </div>
+    <div class="research-card">
+      <div class="research-icon">🤖</div>
+      <h3>추진시스템 모델링 및 AI 기반 형상최적화</h3>
+      <p>머신러닝 학습 기반의 형상 매개변수화 및 최적화 기법으로 설계 공간을 효율적으로 탐색하는 차세대 설계 방법론을 개발합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROFESSOR -->
+<section id="professor">
+  <div class="fade-up">
+    <p class="section-tag">Principal Investigator</p>
+    <h2 class="section-title">지도교수</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="prof-card fade-up">
+    <div>
+      <div class="prof-photo">👤</div>
+    </div>
+    <div class="prof-info">
+      <h2>강 경 래</h2>
+      <p class="prof-title">Assistant Professor · 경희대학교 기계공학부</p>
+      <div class="prof-detail">
+        <span>학력</span>
+        <span>Seoul National University, Ph.D.</span>
+      </div>
+      <div class="prof-detail">
+        <span>이메일</span>
+        <span><a href="mailto:krkang@khu.ac.kr" style="color: var(--bright); text-decoration:none;">krkang@khu.ac.kr</a></span>
+      </div>
+      <div class="prof-detail">
+        <span>소속</span>
+        <span>경희대학교 공과대학 기계공학부</span>
+      </div>
+      <p class="prof-bio">
+        극초음속 추진 및 반응성 유동 분야를 전공하였으며, 서울대학교에서 박사학위를 취득하였습니다. 
+        현재 램-스크램제트 흡입부 설계, 초음속 연소 및 화염 안정화, AI 기반 형상 최적화 연구를 이끌고 있습니다.
+        대학원생 모집에 관심 있는 분은 이메일로 문의 바랍니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERS -->
+<section id="members">
+  <div class="fade-up">
+    <p class="section-tag">Lab Members</p>
+    <h2 class="section-title">연구원 소개</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="members-grid fade-up">
+    <div class="member-card">
+      <div class="member-avatar">👤</div>
+      <div class="member-name">석사과정 1</div>
+      <div class="member-role">M.S. Student</div>
+      <div class="member-research">스크램제트 흡입부 설계</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">👤</div>
+      <div class="member-name">석사과정 2</div>
+      <div class="member-role">M.S. Student</div>
+      <div class="member-research">초음속 연소기 CFD</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">👤</div>
+      <div class="member-name">석사과정 3</div>
+      <div class="member-role">M.S. Student</div>
+      <div class="member-research">AI 형상최적화</div>
+    </div>
+    <div class="member-card" style="border-style:dashed; opacity:0.5;">
+      <div class="member-avatar" style="font-size:2rem;">+</div>
+      <div class="member-name">모집 중</div>
+      <div class="member-role">Recruiting</div>
+      <div class="member-research">대학원생 상시 모집</div>
+    </div>
+  </div>
+  <p style="margin-top:2rem; font-size:0.85rem; color:var(--gray);">
+    * 연구원 정보는 실제 구성원으로 업데이트해주세요.
+  </p>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="fade-up">
+    <p class="section-tag">Publications & Projects</p>
+    <h2 class="section-title">논문 · 프로젝트</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="pub-list fade-up">
+    <div class="pub-item">
+      <div class="pub-year">2024 · Journal</div>
+      <div class="pub-title">논문 제목을 여기에 입력하세요</div>
+      <div class="pub-venue">Journal of Propulsion and Power / AIAA Journal 등</div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2024 · Conference</div>
+      <div class="pub-title">학회 발표 논문 제목을 여기에 입력하세요</div>
+      <div class="pub-venue">AIAA SciTech / KSAS 등</div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2023 · Project</div>
+      <div class="pub-title">연구 프로젝트명을 여기에 입력하세요</div>
+      <div class="pub-venue">주관기관 · 과제번호</div>
+    </div>
+  </div>
+  <p style="margin-top:2rem; font-size:0.85rem; color:var(--gray);">
+    * 실제 논문 및 프로젝트 목록으로 업데이트해주세요.
+  </p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-up">
+    <p class="section-tag">Get in Touch</p>
+    <h2 class="section-title">연락처 · 오시는 길</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="contact-grid fade-up">
+    <div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value"><a href="mailto:krkang@khu.ac.kr">krkang@khu.ac.kr</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏛️</div>
+        <div>
+          <div class="contact-label">Institution</div>
+          <div class="contact-value">경희대학교 공과대학 기계공학부</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Address</div>
+          <div class="contact-value">경기도 용인시 기흥구 덕영대로 1732<br>경희대학교 국제캠퍼스 공과대학</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🎓</div>
+        <div>
+          <div class="contact-label">Recruiting</div>
+          <div class="contact-value">석사·박사 과정 대학원생 상시 모집<br><span style="font-size:0.82rem; color:var(--gray);">관심 있는 학생은 이메일로 문의 바랍니다</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="map-placeholder">
+      <div class="big">🗺️</div>
+      <p style="font-size:0.9rem; margin-bottom:0.5rem;">경희대학교 국제캠퍼스</p>
+      <p style="font-size:0.8rem;">구글 사이트에서 Google Maps 위젯을 삽입하세요</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">RFPL · Kyung Hee University</div>
+  <div class="footer-copy">© 2025 Reacting Flow and Propulsion Lab. All rights reserved.</div>
+</footer>
+
+<script>
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
